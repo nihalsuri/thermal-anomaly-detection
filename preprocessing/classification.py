@@ -3,7 +3,7 @@ from shutil import copy
 from glob import iglob 
 import os
 
-newDir = "C:/Users/nihal.suri/Desktop/Courses/Thesis/clutch_segregated"
+newDir = "C:/Users/nihal.suri/Documents/GitHub/thermal-anomaly-detection/clutch_segregated"
 
 rotorDir = os.path.join(newDir, "rotor")
 misalignmentDir = os.path.join(newDir, "misalignment")
