@@ -2,7 +2,7 @@ import cv2
 import os
 
 
-rootdir = "C:/Users/nihal.suri/Desktop/Courses/Thesis/clutch_2"
+rootdir = "C:/Users/nihal.suri/Documents/GitHub/thermal-anomaly-detection/clutch_2"
 normDir = rootdir + "_normalized"
 
 if not os.path.exists(normDir):
