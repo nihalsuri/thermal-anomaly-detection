@@ -5,7 +5,7 @@ import numpy as np
 def img2np(path, list_of_filename, size = (64, 64)):
     # iterating through each file
     for fn in list_of_filename:
-        fp = path + fn
+        fp = path + '/' + fn
         current_image = image.load_img(fp, target_size = size, 
                                        color_mode = 'grayscale')
         # covert image to a matrix
