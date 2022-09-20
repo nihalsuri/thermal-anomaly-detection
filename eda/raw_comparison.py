@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from keras_preprocessing import image
 from images_as_matrix import img2np
-from find_mean_img import fmi
+from find_mean_img import mean_sd
 
 #image folder 
 segregated_dir = "C:/Users/nihal.suri/Documents/GitHub/thermal-anomaly-detection/clutch_segregated"
@@ -47,22 +47,52 @@ rotor_images = img2np(f'{segregated_dir}/rotor', rotor_imgs)
 misalignement_images = img2np(f'{segregated_dir}/misalignment', misalignment_imgs)
 standard_images = img2np(f'{segregated_dir}/standard', standard_imgs)
 
-#mean 
-rotor_mean = fmi(rotor_images, 'Rotor')
-misalignment_mean = fmi(misalignement_images, 'Misalignement')
-standard_mean = fmi(standard_images, 'Standard')
+#mean and sd 
+rotor_mean, rotor_sd = mean_sd(rotor_images)
+misalignment_mean, misalignment_sd = mean_sd(misalignement_images)
+standard_mean, standard_sd = mean_sd(standard_images)
 
 mean_images = [rotor_mean, misalignment_mean, standard_mean]
-mean_titles = ["ROTOR", "MISALIGNMENT", "STANDARD"]
+sd_images = [rotor_sd, misalignment_sd, standard_sd]
+titles = ["ROTOR", "MISALIGNMENT", "STANDARD"]
 
-fig_mean = plt.figure(figsize = (14,10))
+fig_mean = plt.figure(figsize = (8,6))
 
-for i in range(3): 
-    mean_ax = fig_mean.add_subplot(1, 3, i+1) 
-    plt.imshow(mean_images[i], vmin=0, vmax=255, cmap='Greys_r')
-    plt.title(f'Mean {mean_titles[i]}')
+for i in range(6): 
+    mean_ax = fig_mean.add_subplot(2, 3, i+1) 
+    
+    if i < 3: 
+        plt.imshow(mean_images[i], vmin=0, vmax=255, cmap='Greys_r')
+        plt.title(f'Mean {titles[i]}')
+        
+    else: 
+        plt.imshow(sd_images[i - 3], vmin=0, vmax=255, cmap='Greys_r')
+        plt.title(f'Standard Deviation {titles[i - 3]}')
     plt.axis('off')
+
+#compute the contrast between Rotor vs Misalignment and Standard vs Misalignment 
+diffMean = plt.figure(figsize = (10, 10))
+rotorVsmis = misalignment_mean - rotor_mean 
+standardVsmis = misalignment_mean - standard_mean   
+
+diffMean.add_subplot(1, 2, 1)
+plt.imshow(rotorVsmis, cmap = 'bwr')
+plt.title(f'Rotor vs Misalignment Mean Image')
+plt.axis('off')
+
+diffMean.add_subplot(1, 2, 2)
+plt.imshow(standardVsmis, cmap = 'bwr')
+plt.title(f'Standard vs Misalignment Mean Image')
+plt.axis('off')
+
+
+
+
+
+
 plt.show()
+
+
 
     
 
