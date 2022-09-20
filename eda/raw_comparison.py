@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from keras_preprocessing import image
 from images_as_matrix import img2np
-from find_mean_img import mean_sd
+from mean_sd_img import mean_sd
 
 #image folder 
 segregated_dir = "C:/Users/nihal.suri/Documents/GitHub/thermal-anomaly-detection/clutch_segregated"
