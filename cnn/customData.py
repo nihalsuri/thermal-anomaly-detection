@@ -6,13 +6,13 @@ import os
 import matplotlib.pyplot as plt
 import numpy as np
 
-labelArr = ["rotor", "misalignment", "standard"]
+labelArray = ["rotor", "misalignment", "standard"]
 
 label2id = {}
 id2label = {}
 index = 0
 
-for class_name in labelArr: 
+for class_name in labelArray: 
     label2id[class_name] = str(index)
     id2label[str(index)] = class_name
     index = index + 1
