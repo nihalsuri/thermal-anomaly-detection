@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 from keras_preprocessing import image
 from images_as_matrix import img2np
 from mean_sd_img import mean_sd
-from pca import plot_pca, eigenimages
 
 #image folder 
 segregated_dir = "C:/Users/nihal.suri/Documents/GitHub/thermal-anomaly-detection/clutch_segregated"
