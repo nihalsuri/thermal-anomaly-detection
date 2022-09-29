@@ -86,14 +86,6 @@ plt.imshow(standardVsmis, cmap = 'bwr')
 plt.title(f'Standard vs Misalignment Mean Image')
 plt.axis('off')
 
-# PCA
-plot_pca(eigenimages(misalignement_images[0:100]), 'Misalignment')
-plot_pca(eigenimages(rotor_images[0:100]), 'Rotor')
-plot_pca(eigenimages(standard_images[0:100]), 'Standard')
-
-#print(len(rotor_images), len(standard_images), len(misalignement_images))
-
-plt.show()
 
 
 
