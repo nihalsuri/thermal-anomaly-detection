@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 from keras_preprocessing import image
 from images_as_matrix import img2np
 from mean_sd_img import mean_sd
-from pca import plot_pca, eigenimages
 
 #image folder 
 segregated_dir = "C:/Users/nihal.suri/Documents/GitHub/thermal-anomaly-detection/clutch_segregated"
@@ -86,14 +85,6 @@ plt.imshow(standardVsmis, cmap = 'bwr')
 plt.title(f'Standard vs Misalignment Mean Image')
 plt.axis('off')
 
-# PCA
-plot_pca(eigenimages(misalignement_images[0:100]), 'Misalignment')
-plot_pca(eigenimages(rotor_images[0:100]), 'Rotor')
-plot_pca(eigenimages(standard_images[0:100]), 'Standard')
-
-#print(len(rotor_images), len(standard_images), len(misalignement_images))
-
-plt.show()
 
 
 
