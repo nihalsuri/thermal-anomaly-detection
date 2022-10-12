@@ -7,38 +7,6 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import cv2
 
-def transformations_plot(image):
-    # # Random Crop
-    # cropper = transforms.RandomCrop(size=(100, 120))
-    # cropped_img = cropper(image)
-    # # Random Resized Crop 
-    # resized_cropper = transforms.RandomResizedCrop(size=(100, 120))
-    # resized_crop = resized_cropper(image)
-    # Random Rotation 
-    rotater = transforms.RandomRotation(degrees=(0, 180))
-    rotated_img = rotater(image)
-    # Random Affine 
-    affine_transfomer = transforms.RandomAffine(degrees=(30, 70), translate=(0.1, 0.3), scale=(0.5, 0.75))
-    affine_img = affine_transfomer(image)
-    # Gaussian Blur 
-    blurrer = transforms.GaussianBlur(kernel_size=(5, 9), sigma=(0.1, 5))
-    blurred_img = blurrer(image)
-    # Random Invert
-    inverter = transforms.RandomInvert(p=0.9)
-    invertered_img = inverter(image)
-    # Color Jitter 
-    jitter = transforms.ColorJitter(brightness=.5, hue=.3)
-    jitted_img = jitter(image)
-    # Random AutoContrast
-    autocontraster = transforms.RandomAutocontrast(p=0.9) 
-    autocontrasted_img = autocontraster(image)
-    
-    #fig = plt.figure(figsize=[12,4])
-    # fig, axs = plt.subplots(2, 4, sharex=True, sharey=True)
-    # axs[0, 0].plot(rotated_img)
-    # plt.show()
-
-
 
 # Data path with train, test and val segregation 
 data_path = 'C:/Users/nihal.suri/Documents/GitHub/thermal-anomaly-detection/cnn/dataset_distribution.csv'
