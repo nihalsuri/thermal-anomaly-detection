@@ -8,7 +8,7 @@ import torchvision.transforms as T
 
 
 plt.rcParams["savefig.bbox"] = 'tight'
-orig_img = Image.open(Path('assets') / 'astronaut.jpg')
+orig_img = Image.open(Path('assets') / '0.png')
 # if you change the seed, make sure that the randomly-applied transforms
 # properly show that the image can be both transformed and *not* transformed!
 torch.manual_seed(0)
