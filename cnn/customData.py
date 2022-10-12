@@ -87,8 +87,6 @@ transform_test = transforms.Compose([
 
 
 
-
-
 # dataloaders
 train_dataset = ClutchDataset(train_df, root_dir = path, is_train = True, transform=transform_train)
 val_dataset = ClutchDataset(val_df, root_dir = path, is_train = False, transform=transform_valid)
