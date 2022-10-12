@@ -13,6 +13,16 @@ import pandas as pd
 import cv2
 
 
+# Data path with train, test and val segregation 
+data_path = 'C:/Users/nihal.suri/Documents/GitHub/thermal-anomaly-detection/cnn/dataset_distribution.csv'
+df = pd.read_csv(data_path)
+
+# Split data into three seperate dataframes : train , test , val 
+train_df = df[df['dataset'].str.contains('train')]
+test_df = df[df['dataset'].str.contains('test')]
+val_df = df[df['dataset'].str.contains('val')]
+
+
 # Custom dataset class : returns image and label for futher training 
 class ClutchDataset(Dataset):
     
@@ -29,13 +39,14 @@ class ClutchDataset(Dataset):
         if torch.is_tensor(idx): 
             idx = idx.tolist()
             
-        img_name =  os.path.join(self.root_dir, self.dataframe.iloc[idx, 1], self.dataframe.iloc[idx, 0])
+        img_name =  os.path.join ( self.root_dir , self.dataframe.iloc[idx, 1] )
         image1 = cv2.imread(img_name)
-        image = Image.fromarray(image1)
+        image_norm = cv2.normalize(image1, None, alpha = 0, beta = 255, norm_type = cv2.NORM_MINMAX)
+        image = Image.fromarray(image_norm)
         
         if self.is_train: 
-            labelKey = self.dataframe.iloc[idx, 1]
-            label = torch.tensor(int(ids[labelKey]))
+            # labelKey = self.dataframe.iloc[idx, 1]
+            label = torch.tensor(int(self.dataframe.iloc[idx, 2]))
         else: 
             label = torch.tensor(1)
     
@@ -46,86 +57,51 @@ class ClutchDataset(Dataset):
 
 
     
-def createDataframe(path, name):
-    
-    cols = ["image_id", "label"]
-    labelsCsv = open(name, 'w')
-    writer = csv.writer(labelsCsv)
-    writer.writerow(cols)
-    
-    dir = os.listdir(path)
-    for subdir in dir:
-        subdirContents = os.listdir(os.path.join(path, subdir))
-        for contents in subdirContents: 
-            col = [contents, subdir]
-            writer.writerow(col)
-    
-    labelsCsv.close()
+
+# main dataset path
+path = "C:/Users/nihal.suri/Documents/GitHub/thermal-anomaly-detection/clutch_2"
 
 
-def removeEmptyRows(inputFile, outputFile):
-    df = pd.read_csv(inputFile)
-    df.to_csv(outputFile, index = False)
-
-
-
-def label2id(labelArray):
-    label2id = {}
-    id2label = {}
-    index = 0
-
-    for class_name in labelArray: 
-        label2id[class_name] = str(index)
-        id2label[str(index)] = class_name
-        index = index + 1
-    
-    return label2id
-    
-
-
-# dataframe created and csv file added 
-path = "C:/Users/nihal.suri/Documents/GitHub/thermal-anomaly-detection/clutch_segregated"
-createDataframe(path, 'train.csv')
-removeEmptyRows('train.csv', 'train_data.csv')
-
-# label creations 
-train_data = pd.read_csv('train_data.csv')
-labelArr = train_data['label'].unique()
-ids = label2id(labelArr)
-
-# train test split 
-train_data_sample = train_data.sample(frac = 0.4)
-train, valid = train_test_split(train_data_sample, stratify=train_data_sample['label'], test_size=0.2)
-# print(len(train))
-# print(len(valid))
-
-
-#Add transforms for train and test dataset 
+#Add transforms for train, test, val dataset 
 input_size = 224
 transform_train = transforms.Compose([
     # add other transformations in this list
-    #transforms.Resize(input_size), 
+    transforms.Resize(input_size), 
     transforms.Grayscale(num_output_channels = 1), 
     transforms.ToTensor()
 ])
 
 transform_valid = transforms.Compose([
     # add other transformations in this list
-    #transforms.Resize(input_size), 
+    transforms.Resize(input_size), 
+    transforms.Grayscale(num_output_channels = 1), 
+    transforms.ToTensor()
+])
+
+transform_test = transforms.Compose([
+    # add other transformations in this list
+    transforms.Resize(input_size), 
     transforms.Grayscale(num_output_channels = 1), 
     transforms.ToTensor()
 ])
 
 
 
+
+
 # dataloaders
-train_dataset = ClutchDataset(train, root_dir = path, is_train = True, transform=transform_train)
-valid_dataset = ClutchDataset(valid, root_dir = path, is_train = False, transform=transform_valid)
+train_dataset = ClutchDataset(train_df, root_dir = path, is_train = True, transform=transform_train)
+val_dataset = ClutchDataset(val_df, root_dir = path, is_train = False, transform=transform_valid)
+test_dataset = ClutchDataset(test_df, root_dir = path, is_train = False, transform=transform_test)
+
 train_loader = DataLoader(train_dataset, batch_size = 64, shuffle = True)
-val_loader = DataLoader(valid_dataset, batch_size = 64, shuffle = True)
+val_loader = DataLoader(val_dataset, batch_size = 64, shuffle = True)
+test_loader = DataLoader(test_dataset, batch_size = 64, shuffle = True)
+
 dataloaders_dict = {}
 dataloaders_dict['train'] = train_loader 
 dataloaders_dict['val'] = val_loader
+dataloaders_dict['test'] = test_loader
 
 
 # iteratre through dataloaders 
