@@ -9,7 +9,7 @@ import cv2
 
 
 # Data path with train, test and val segregation 
-data_path = 'C:/Users/nihal.suri/Documents/GitHub/thermal-anomaly-detection/cnn/dataset_distribution.csv'
+data_path = 'C:/Users/nihal.suri/Documents/GitHub/thermal-anomaly-detection/nns/dataset_distribution.csv'
 df = pd.read_csv(data_path)
 
 # Split data into three seperate dataframes : train , test , val 
