@@ -38,12 +38,8 @@ class ClutchDataset(Dataset):
         image1 = cv2.imread(img_name)
         image_norm = cv2.normalize(image1, None, alpha = 0, beta = 255, norm_type = cv2.NORM_MINMAX)
         image = Image.fromarray(image_norm)
+        label = torch.tensor(int(self.dataframe.iloc[idx, 2]))
         
-        if self.is_train: 
-            # labelKey = self.dataframe.iloc[idx, 1]
-            label = torch.tensor(int(self.dataframe.iloc[idx, 2]))
-        else: 
-            label = torch.tensor(1)
     
         if self.transform: 
             image = self.transform(image)
