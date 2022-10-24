@@ -88,6 +88,3 @@ print("Checking accuracy on test data")
 check_accuracy(test_loader, model)
 print("Checking accuracy on validation data")
 check_accuracy(val_loader, model)
-
-        
-            
