@@ -42,18 +42,18 @@ def plot(imgs, with_orig=True, row_title=None, **imshow_kwargs):
 
 
 # For mages : 
-resized_imgs = [T.Resize(size=size)(orig_img) for size in (30, 50, 100, orig_img.size)]
-plot(resized_imgs)
-center_crops = [T.CenterCrop(size=size)(orig_img) for size in (30, 50, 100, orig_img.size)]
+# resized_imgs = [T.Resize(size=size)(orig_img) for size in (30, 50, 100, orig_img.size)]
+# plot(resized_imgs)
+center_crops = [T.CenterCrop(size=size)(orig_img) for size in (30, 50, 70, 80)]
 plot(center_crops)
-(top_left, top_right, bottom_left, bottom_right, center) = T.FiveCrop(size=(100, 100))(orig_img)
-plot([top_left, top_right, bottom_left, bottom_right, center])
+# (top_left, top_right, bottom_left, bottom_right, center) = T.FiveCrop(size=(100, 100))(orig_img)
+# plot([top_left, top_right, bottom_left, bottom_right, center])
 jitter = T.ColorJitter(brightness=.5, hue=.3)
 jitted_imgs = [jitter(orig_img) for _ in range(4)]
 plot(jitted_imgs)
-blurrer = T.GaussianBlur(kernel_size=(5, 9), sigma=(0.1, 5))
-blurred_imgs = [blurrer(orig_img) for _ in range(4)]
-plot(blurred_imgs)
+# blurrer = T.GaussianBlur(kernel_size=(5, 9), sigma=(0.1, 5))
+# blurred_imgs = [blurrer(orig_img) for _ in range(4)]
+# plot(blurred_imgs)
 perspective_transformer = T.RandomPerspective(distortion_scale=0.6, p=1.0)
 perspective_imgs = [perspective_transformer(orig_img) for _ in range(4)]
 plot(perspective_imgs)

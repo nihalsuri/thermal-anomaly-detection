@@ -56,7 +56,7 @@ input_size = 224
 transform_train = transforms.Compose([
     # add other transformations in this list
     # transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
-    transforms.Resize((input_size, input_size)),
+    #transforms.Resize((input_size, input_size)),
     transforms.Grayscale(num_output_channels=1),
     transforms.ToTensor()
 
@@ -65,14 +65,14 @@ transform_train = transforms.Compose([
 
 transform_valid = transforms.Compose([
     # add other transformations in this list
-    transforms.Resize((input_size, input_size)),
+   # transforms.Resize((input_size, input_size)),
     transforms.Grayscale(num_output_channels=1),
     transforms.ToTensor()
 ])
 
 transform_test = transforms.Compose([
     # add other transformations in this list
-    transforms.Resize((input_size, input_size)),
+    #transforms.Resize((input_size, input_size)),
     transforms.Grayscale(num_output_channels=1),
     transforms.ToTensor()
 ])
@@ -103,5 +103,6 @@ print(f"Labels batch shape: {train_labels.size()}")
 img = train_features[0].squeeze()
 label = train_labels[0]
 plt.imshow(img, cmap="gray")
+plt.axis('off')
 plt.show()
 print(f"Label: {label}")
